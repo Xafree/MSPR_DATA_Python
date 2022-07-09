@@ -5,22 +5,31 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-openData = os.getenv('STRASBOURG')
 
-response_strasbourg = requests.get(openData)
-open_data_strasbourg = response_strasbourg.json()
+def getURLOpenDataStrasbourg():
+    return os.getenv('STRASBOURG')
 
-data_strasbourg = []
 
-for i in range(len(open_data_strasbourg['records'])):
-    data_set = {
-        "ville": "Strasbourg",
-        "nom": open_data_strasbourg['records'][i]['fields']['nom_parking'],
-        "date": open_data_strasbourg['records'][i]['record_timestamp'],
-        "place_libres": open_data_strasbourg['records'][i]['fields']['libre'],
-        "places_totales": open_data_strasbourg['records'][i]['fields']['total']
-    }
+def getJsonOpenData(opendata):
+    response_strasbourg = requests.get(opendata)
+    open_data_strasbourg = response_strasbourg.json()
+    return open_data_strasbourg
+
+
+def DataListeOfCarsParkAboutStrasbourg(dataJson):
+    data_strasbourg = []
+    for i in range(len(dataJson['records'])):
+        data_set = {
+            "ville": "Strasbourg",
+            "nom": dataJson['records'][i]['fields']['nom_parking'],
+            "date": dataJson['records'][i]['record_timestamp'],
+            "place_libres": dataJson['records'][i]['fields']['libre'],
+            "places_totales": dataJson['records'][i]['fields']['total']
+        }
 
     data_strasbourg.append(data_set)
+    return data_strasbourg
 
-print(data_strasbourg)
+
+def getDataAboutCarsParkStrasbourg():
+    return DataListeOfCarsParkAboutStrasbourg(getJsonOpenData(getURLOpenDataStrasbourg))

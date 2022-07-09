@@ -7,35 +7,45 @@ from xml.etree import ElementTree
 
 load_dotenv()
 
-MONTPELLIER = os.getenv('MONTPELLIER')
 
-#On récupère les données de L'api de OpenData de Montpellier
-response = requests.get(MONTPELLIER)
+def getURLOpenDataMontpellier():
+    return os.getenv('MONTPELLIER')
 
-#print(response.json())
-OpenDataMontpellier = response.json()
 
-#On parcoure les données de l'API
-urlList = []
+def getjsonOpenData(Url):
+    # On récupère les données de L'api de OpenData de Montpellier
+    response = requests.get(Url)
 
-#On parcour les donnée de l'api
-for i in range(len(OpenDataMontpellier['result']['resources'])):
-    urlList.append(OpenDataMontpellier['result']['resources'][i]['url'])
+    # print(response.json())
+    OpenDataMontpellier = response.json()
+    return OpenDataMontpellier
 
-data_montpellier = []
 
-for i in range(2, len(urlList)):
-    res_xml = requests.get(urlList[i])
-    if res_xml.content.decode("utf-8") != "":
-        root = ElementTree.fromstring(res_xml.content)
-        data_set = {
-          "ville": "Montpellier",
-          "nom": root.findtext("Name"),
-          "date": root.findtext("DateTime"),
-          "place_libres": root.findtext("Free"),
-          "places_totales": root.findtext("Total")
-        }
-    data_to_json = json.dumps(data_set)
-    data_montpellier.append(data_to_json)
+def extractFormatJson(JsonOpenDataMontpellier):
+    # On parcoure les données de l'API
+    urlList = []
 
-print(data_montpellier)
+    # On parcour les donnée de l'api
+    for i in range(len(JsonOpenDataMontpellier['result']['resources'])):
+        urlList.append(JsonOpenDataMontpellier['result']['resources'][i]['url'])
+
+    data_montpellier = []
+
+    for i in range(2, len(urlList)):
+        res_xml = requests.get(urlList[i])
+        if res_xml.content.decode("utf-8") != "":
+            root = ElementTree.fromstring(res_xml.content)
+            data_set = {
+                "ville": "Montpellier",
+                "nom": root.findtext("Name"),
+                "date": root.findtext("DateTime"),
+                "place_libres": root.findtext("Free"),
+                "places_totales": root.findtext("Total")
+            }
+        data_to_json = json.dumps(data_set)
+        data_montpellier.append(data_to_json)
+    return data_montpellier
+
+
+def getDataAboutCarsParkMontepllier():
+    return extractFormatJson(getjsonOpenData(getURLOpenDataMontpellier))
