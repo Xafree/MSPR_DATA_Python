@@ -12,9 +12,9 @@ def getURLOpenDataMontpellier():
     return os.getenv('MONTPELLIER')
 
 
-def getjsonOpenData(Url):
+def getjsonOpenData():
     # On récupère les données de L'api de OpenData de Montpellier
-    response = requests.get(Url)
+    response = requests.get(os.getenv('MONTPELLIER'))
 
     # print(response.json())
     OpenDataMontpellier = response.json()
@@ -48,4 +48,4 @@ def extractFormatJson(JsonOpenDataMontpellier):
 
 
 def getDataAboutCarsParkMontepllier():
-    return extractFormatJson(getjsonOpenData(getURLOpenDataMontpellier))
+    return extractFormatJson(getjsonOpenData())
