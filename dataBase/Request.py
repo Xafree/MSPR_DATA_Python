@@ -1,12 +1,17 @@
+# -*- coding: utf-8 -*-
+from dataBase.Connect import Connect
+from dataBase.Query import Query
+
+
 
 # for help i used this website http://www.mukeshkumar.net/articles/python/crud-operations-in-python-with-sql-database
 
 class Request:
 
-    def create(self, connect, data):
+    def function_create(self, data):
 
         # Get the sql connection
-        connection = connect.getConnection()
+        connection = Connect().getConnection()
 
         name = input('Enter Name = ')
         age = input('Enter Age = ')
@@ -30,13 +35,13 @@ class Request:
             connection.close()
 
     # get all data from Parkings Table
-    def get(self, connect):
+    def get(self):
         # Get the sql connection
-        connection = connect.getConnection()
+        connection = Connect().getConnection()
         cursor = connection.cursor()
 
         # Execute the sql query
-        cursor.execute(self.queryData)
+        cursor.execute(Query().get())
 
         # Print the data
         for row in cursor:

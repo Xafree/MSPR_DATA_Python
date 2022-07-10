@@ -1,12 +1,13 @@
 import OpenData.Montpellier as montpellier
 import OpenData.Strasbourg as strasbourg
-import dataBase.resquestDataBase as requestData
-import dataBase.connexion as connection
+from dataBase.Connect import Connect
+from dataBase.Request import Request
 
-#dataMontpellier = montpellier.getDataAboutCarsParkMontepllier()
-#dataStrasbourg = strasbourg.getDataAboutCarsParkStrasbourg()
+dataMontpellier = montpellier.getDataAboutCarsParkMontepllier()
+dataStrasbourg = strasbourg.getDataAboutCarsParkStrasbourg()
 
 print("--Data base --")
-connect = connection.getConnection()
-request = requestData.Request()
-request.get(connect)
+connect = Connect()
+print(connect.getConnection())
+request = Request()
+print(request.get())
