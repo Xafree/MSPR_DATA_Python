@@ -8,20 +8,17 @@ from dataBase.Query import Query
 
 class Request:
 
-    def function_create(self, data):
+    def create(self, data):
 
         # Get the sql connection
         connection = Connect().getConnection()
 
-        name = input('Enter Name = ')
-        age = input('Enter Age = ')
-
         try:
-            query = "Insert Into Employee(Name, Age) Values(?,?)"
+            query = Query.post(data)
             cursor = connection.cursor()
 
             # Execute the sql query
-            cursor.execute(query, [name, age])
+            cursor.execute(query)
 
             # Commit the data
             connection.commit()
