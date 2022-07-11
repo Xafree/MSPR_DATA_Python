@@ -7,17 +7,17 @@ from dataBase.Request import Request
 # dataStrasbourg = strasbourg.getDataAboutCarsParkStrasbourg()
 
 dataTest = {
-    "updated_place": "10/07/2022 22:202:30",
-    "update_parking": "10/07/2022 22:202:30",
+    "updated_place": "2022-07-07 19:07:30",
+    "update_parking": "2022-07-07 19:07:30",
     "nom": "Parking test",
-    "num_siret": "152408603",
+    "num_siret": 152408603,
     "ville": "Montpllier",
     "prix": 00,
     "longitude": 1540,
     "latitude": 4500,
     "nb_place_totale": 500,
     "nb_place_disponible": 250,
-    "estgratuit": True,
+    "estgratuit": 1,
 
 }
 
@@ -25,3 +25,4 @@ print("--Data base --")
 connect = Connect()
 request = Request()
 print(request.create(dataTest))
+request.get()

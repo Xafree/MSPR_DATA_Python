@@ -14,18 +14,18 @@ class Request:
         connection = Connect().getConnection()
 
         try:
-            query = Query.post(data)
+            query = Query.post("INSERT INTO parkings VALUES (2,'2022-07-07 19:07:30', '2022-07-11 19:07:30', 'Toulon', 1548754, 'TOULON', 0.0, 15478.0, 15487.0, 350, 150, 0")
             cursor = connection.cursor()
 
             # Execute the sql query
             cursor.execute(query)
-
+            cursor.description
             # Commit the data
             connection.commit()
             print('Data Saved Successfully')
 
         except:
-            print('Somethng worng, please check')
+            print('Something worng, please check')
 
         finally:
             # Close the connection
