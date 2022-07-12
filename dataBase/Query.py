@@ -10,6 +10,9 @@ class Query:
     def get(self):
         return "Select * from Parkings"
 
+    def getInserIntoParkings(self):
+        return "INSERT INTO parkings (id_parking,updated_place, update_parking, nom, num_siret, ville, prix, longitude, latitude, nb_place_totale, nb_place_disponible, estgratuit) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+
     #Push data who provided open data
     #data is a variable how have data of parkings
     def post(self, data):

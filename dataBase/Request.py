@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
+
 from dataBase.Connect import Connect
 from dataBase.Query import Query
-
 
 
 # for help i used this website http://www.mukeshkumar.net/articles/python/crud-operations-in-python-with-sql-database
@@ -9,26 +9,24 @@ from dataBase.Query import Query
 class Request:
 
     def create(self, data):
-
         # Get the sql connection
         connection = Connect().getConnection()
-
+        # requete SQL
         try:
-            query = Query.post("INSERT INTO parkings VALUES (2,'2022-07-07 19:07:30', '2022-07-11 19:07:30', 'Toulon', 1548754, 'TOULON', 0.0, 15478.0, 15487.0, 350, 150, 0")
+            sql = ("INSERT INTO parkings (id_parking,updated_place, update_parking, nom, num_siret, ville, prix, longitude, latitude, nb_place_totale, nb_place_disponible, estgratuit) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)")
+
             cursor = connection.cursor()
-
             # Execute the sql query
-            cursor.execute(query)
-            cursor.description
-            # Commit the data
+            cursor.execute(sql, (data['id_parking'], data['updated_place'], data['update_parking'],
+                                 data['nom'], data['num_siret'], data['ville'], data['prix'],
+                                 data['longitude'], data['latitude'], data['nb_place_totale'],
+                                 data['nb_place_disponible'], data['estgratuit']))
             connection.commit()
-            print('Data Saved Successfully')
-
+            print('Success')
         except:
-            print('Something worng, please check')
-
+            print('Somthing Wront, check it')
+        # Commit the data
         finally:
-            # Close the connection
             connection.close()
 
     # get all data from Parkings Table
