@@ -86,7 +86,7 @@ class Request:
                                                  data['longitude'], data['latitude'], data['nb_place_totale'],
                                                  data['nb_place_disponible'], data['estgratuit'], id_parkings))
                 connection.commit()
-            else :
+            else:
                 sqlUpdateParking = query.updateParking()
                 cursor.execute(sqlUpdateParking, (data['updated_place'], data['update_parking'],
                                              data['nom'], data['num_siret'], data['ville'], data['prix'],
