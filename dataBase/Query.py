@@ -15,4 +15,8 @@ class Query:
     def getParkingsHist(self):
         return "Select * from Parkings_hist"
 
-#
+    def checkIfParkingExist(self):
+        return "SELECT id_parking FROM parkings WHERE nom = %s"
+
+    def updateParking(self):
+        return "UPDATE parkings SET updated_place=%s, update_parking=%s, nom=%s, num_siret=%s, ville=%s, prix=%s, longitude=%s, latitude=%s, nb_place_totale=%s, nb_place_disponible=%s, estgratuit=%s WHERE id_parking =%s"

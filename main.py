@@ -6,17 +6,19 @@ from dataBase.Request import Request
 #dataMontpellier = montpellier.getDataAboutCarsParkMontepllier()
 #dataStrasbourg = strasbourg.getDataAboutCarsParkStrasbourg()
 
+#print(dataStrasbourg)
+
 dataTest = {
     "updated_place": '2022-07-07 19:07:30',
-    "update_parking": '2022-07-07 19:07:30',
+    "update_parking": '2022-07-18 19:07:30',
     "nom": 'Parking test',
-    "num_siret": 8427451,
+    "num_siret": 8658975654,
     "ville": "Montpllier",
     "prix": 0.0,
     "longitude": 1540.15,
     "latitude": 4500.152,
-    "nb_place_totale": 500,
-    "nb_place_disponible": 250,
+    "nb_place_totale": 12000,
+    "nb_place_disponible": 900,
     "estgratuit": 0,
 }
 
@@ -29,11 +31,12 @@ request = Request()
 
 #print(request.create(dataTest))
 
-
 #request.getOneParkings(dataTest)
 
-request.pushAndRightinHistoryTable(dataTest)
+request.upsertParkingAndWriteInHistoryTable(dataTest)
+
 print("-- Get Parkings --")
 request.getParkings()
+
 print("-- Get Parkings Hist --")
 request.getParkingsHist()

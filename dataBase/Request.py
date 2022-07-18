@@ -46,43 +46,65 @@ class Request:
 
         connection.close()
 
-    def pushAndRightinHistoryTable(self, data):
+    def upsertParkingAndWriteInHistoryTable(self, data):
         # SQL connect dataBase
         connection = Connect().getConnection()
         # Query Sql we need
         query = Query()
 
         # We want to push in 'parkings' table and save data in 'parkings_hist'
+        #try:
+        cursor = connection.cursor()
+        sqlCheckIfExist = query.checkIfParkingExist()
+        cursor.execute(sqlCheckIfExist,(data['nom'],))
+        result = cursor.fetchall()
+        print(result)
         try:
-            cursor = connection.cursor()
-            sqlParkings = query.insertIntoParkings()
-            # Insert data in parkings table
-            cursor.execute(sqlParkings, (data['updated_place'], data['update_parking'],
-                                         data['nom'], data['num_siret'], data['ville'], data['prix'],
-                                         data['longitude'], data['latitude'], data['nb_place_totale'],
-                                         data['nb_place_disponible'], data['estgratuit']))
-            # connection.commit()
-
-            # Get id of last request
-            sqlGetIdParkings = query.getOneParkings()
-            cursor.execute(sqlGetIdParkings, (data['num_siret'],))
-            record = cursor.fetchall()
-            id_parkings = record[0][0]
-
-            # push in parkings_Hist to save record
-            dt = datetime.now()
-            timeStampParkingHist = datetime.timestamp(dt)  # TimeStamp
-            print("Time Stamp : "+ dt.strftime("%Y-%m-%d %H:%M:%S"))
-            sqlParkingsHist = query.insertIntoParkingsHist()
-            # timestamp_id,updated_place, update_parking, nom, num_siret, ville, prix, longitude, latitude, nb_place_totale, nb_place_disponible, estgratuit, id_parking
-            cursor.execute(sqlParkingsHist, (dt.strftime("%Y-%m-%d %H:%M:%S") , data['updated_place'], data['update_parking'],
+            if result == [] :
+                sqlParkings = query.insertIntoParkings()
+                # Insert data in parkings table
+                cursor.execute(sqlParkings, (data['updated_place'], data['update_parking'],
                                              data['nom'], data['num_siret'], data['ville'], data['prix'],
                                              data['longitude'], data['latitude'], data['nb_place_totale'],
-                                             data['nb_place_disponible'], data['estgratuit'], id_parkings))
-            connection.commit()
+                                             data['nb_place_disponible'], data['estgratuit']))
+                # connection.commit()
 
-        except:
-            print("I can do anything, pleas check request")
+                # Get id of last request
+                sqlGetIdParkings = query.getOneParkings()
+                cursor.execute(sqlGetIdParkings, (data['num_siret'],))
+                record = cursor.fetchall()
+                id_parkings = record[0][0]
+
+                # push in parkings_Hist to save record
+                dt = datetime.now()
+                # TimeStamp
+                print("Time Stamp : "+ dt.strftime("%Y-%m-%d %H:%M:%S"))
+                sqlParkingsHist = query.insertIntoParkingsHist()
+                # timestamp_id,updated_place, update_parking, nom, num_siret, ville, prix, longitude, latitude, nb_place_totale, nb_place_disponible, estgratuit, id_parking
+                cursor.execute(sqlParkingsHist, (dt.strftime("%Y-%m-%d %H:%M:%S"), data['updated_place'], data['update_parking'],
+                                                 data['nom'], data['num_siret'], data['ville'], data['prix'],
+                                                 data['longitude'], data['latitude'], data['nb_place_totale'],
+                                                 data['nb_place_disponible'], data['estgratuit'], id_parkings))
+                connection.commit()
+            else :
+                sqlUpdateParking = query.updateParking()
+                cursor.execute(sqlUpdateParking, (data['updated_place'], data['update_parking'],
+                                             data['nom'], data['num_siret'], data['ville'], data['prix'],
+                                             data['longitude'], data['latitude'], data['nb_place_totale'],
+                                             data['nb_place_disponible'], data['estgratuit'],result[0][0]))
+                print("here")
+                dt = datetime.now()
+                # TimeStamp
+                print("Time Stamp : "+ dt.strftime("%Y-%m-%d %H:%M:%S"))
+                sqlParkingsHist = query.insertIntoParkingsHist()
+                # timestamp_id,updated_place, update_parking, nom, num_siret, ville, prix, longitude, latitude, nb_place_totale, nb_place_disponible, estgratuit, id_parking
+                cursor.execute(sqlParkingsHist, (dt.strftime("%Y-%m-%d %H:%M:%S"), data['updated_place'], data['update_parking'],
+                                                 data['nom'], data['num_siret'], data['ville'], data['prix'],
+                                                 data['longitude'], data['latitude'], data['nb_place_totale'],
+                                                 data['nb_place_disponible'], data['estgratuit'], result[0][0]))
+                connection.commit()
+        except ValueError:
+            print(ValueError)
         finally:
             connection.close()
 
