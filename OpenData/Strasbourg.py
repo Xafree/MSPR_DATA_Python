@@ -1,6 +1,7 @@
 import requests
 import os
 
+from datetime import datetime
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -22,7 +23,8 @@ def DataListeOfCarsParkAboutStrasbourg(dataJson):
         data_set = {
             "ville": "Strasbourg",
             "nom": dataJson['records'][i]['fields']['nom_parking'],
-            "date": dataJson['records'][i]['record_timestamp'],
+            "date": datetime.strptime(dataJson['records'][i]['record_timestamp'], '%Y-%m-%dT%H:%M:%S.%f%z').strftime('%Y-%m-%d %H:%M:%S'),
+            #"date": dataJson['records'][i]['record_timestamp'],
             "place_libres": dataJson['records'][i]['fields']['libre'],
             "places_totales": dataJson['records'][i]['fields']['total']
         }

@@ -1,3 +1,6 @@
+from datetime import datetime
+from re import search
+
 import requests
 import json
 import os
@@ -38,12 +41,13 @@ def extractFormatJson(JsonOpenDataMontpellier):
             data_set = {
                 "ville": "Montpellier",
                 "nom": root.findtext("Name"),
-                "date": root.findtext("DateTime"),
+                #"date": root.findtext("DateTime"),
+                "date": datetime.strptime(root.findtext("DateTime")[0:19], '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d %H:%M:%S'),
                 "place_libres": root.findtext("Free"),
                 "places_totales": root.findtext("Total")
             }
         data_to_json = json.dumps(data_set)
-        data_montpellier.append(data_to_json)
+        data_montpellier.append(data_set)
     return data_montpellier
 
 
