@@ -1,3 +1,6 @@
+from datetime import datetime
+from re import search
+
 import requests
 import json
 import os
@@ -20,6 +23,34 @@ def getjsonOpenData():
     OpenDataMontpellier = response.json()
     return OpenDataMontpellier
 
+def  switchNameOpenData(name):
+    dictionaryOfParkingsName = {
+        'ANTI': "Antigone",
+        'ARCT': "Arc de Triomphe",
+        'COME': "THEATRE COMEDIE",
+        'CORU': "Corum",
+        'EURO': "Europa",
+        'FOCH': "Foch Préfecture",
+        'GAMB': "Gambetta",
+        'GARE': "Saint Roch",
+        'TRIA': "Triangle",
+        'PITO': "PITOT",
+        'CIRC': "Circé Odysseum",
+        'SABI': "Sabines",
+        'GARC': "Garcia Lorca",
+        'SABL': "Notre Dame de Sablassou",
+        'MOSS': "Mosson",
+        'SJLC': "Saint Jean Le Sec", #Not match
+        'MEDC': "Euromédecine ",
+        'OCCI': "Occitanie",
+        'VICA': "Vicarello", #Not match
+        'GA109': "Gaumont EST", #Not match
+        'GA250': "Gaumont OUEST", #Not match
+        'CDGA': "Charles de Gaulle",
+        'ARCE': "Arceaux",
+        'POLY': "Polygone",
+    }
+    return dictionaryOfParkingsName.get(name)
 
 def extractFormatJson(JsonOpenDataMontpellier):
     # On parcoure les données de l'API
@@ -35,15 +66,16 @@ def extractFormatJson(JsonOpenDataMontpellier):
         res_xml = requests.get(urlList[i])
         if res_xml.content.decode("utf-8") != "":
             root = ElementTree.fromstring(res_xml.content)
+            name = switchNameOpenData(root.findtext("Name"))
             data_set = {
                 "ville": "Montpellier",
-                "nom": root.findtext("Name"),
-                "date": root.findtext("DateTime"),
+                "nom": name,
+                "date": datetime.strptime(root.findtext("DateTime")[0:19], '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d %H:%M:%S'),
                 "place_libres": root.findtext("Free"),
                 "places_totales": root.findtext("Total")
             }
-        data_to_json = json.dumps(data_set)
-        data_montpellier.append(data_to_json)
+        #data_to_json = json.dumps(data_set)
+        data_montpellier.append(data_set)
     return data_montpellier
 
 

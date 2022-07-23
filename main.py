@@ -3,8 +3,8 @@ import OpenData.Strasbourg as strasbourg
 from dataBase.Connect import Connect
 from dataBase.Request import Request
 
-#dataMontpellier = montpellier.getDataAboutCarsParkMontepllier()
-#dataStrasbourg = strasbourg.getDataAboutCarsParkStrasbourg()
+dataMontpellier = montpellier.getDataAboutCarsParkMontepllier()
+dataStrasbourg = strasbourg.getDataAboutCarsParkStrasbourg()
 
 #print(dataStrasbourg)
 
