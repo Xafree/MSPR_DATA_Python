@@ -108,7 +108,7 @@ class Request:
         finally:
             connection.close()
 
-    def getOneParkings(self, data):
+    def getOneParking(self, data):
 
         connection = Connect().getConnection()
         query = Query()
@@ -131,5 +131,4 @@ class Request:
         # Print the data
         for row in cursor:
             print('row = %r' % (row,))
-
         connection.close()

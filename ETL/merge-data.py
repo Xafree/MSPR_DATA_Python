@@ -1,15 +1,9 @@
-
-#Faire un merge des open data et des data gouv de manière a récupérer le prix longitude et l'atitude
-#Data utile dans le gouv = tarif 1h, longitude, lattitude, Adresse? .
-#Open data = Nb_place disponible, nb place totale, nom du parking, la ville
-#Api_jour férier = récupération des jours férier, jour de l'année (Day of the week énum de lundi à dimanche). peut être les vacances si on a le time frrrrrrr
 import pandas as pd
 
 import OpenData.Montpellier as montpellier
 import OpenData.Strasbourg as strasbourg
 import OpenData.Datagouv as gouv
-from dataBase.Connect import Connect
-from dataBase.Request import Request
+from DateUtilities import DataUtilies
 
 dataTest = {
     "updated_place": '2022-07-07 19:07:30',
@@ -32,15 +26,14 @@ OpenData_set = {
     "places_totales": ""
 }
 
-
-DataGouv_set ={
-    "nom":"",
+DataGouv_set = {
+    "nom": "",
     "prix": "",
-    "longitude":"",
+    "longitude": "",
     "latitude": "",
 }
 
-FinalData_set ={
+FinalData_set = {
     "ville": "",
     "nom": "",
     "date": "",
@@ -51,31 +44,39 @@ FinalData_set ={
     "latitude": "",
 }
 
-
 dataMontpellier = montpellier.getDataAboutCarsParkMontepllier()
 dataStrasbourg = strasbourg.getDataAboutCarsParkStrasbourg()
 datagouv = gouv.getDataAboutCarsParkDataGouv()
 
 dataFrame = pd.DataFrame.from_records(dataMontpellier + dataStrasbourg)
 
-print(dataFrame[22:47].head())
-#print(datagouv.head())
-finalArray= []
-print(dataFrame.iloc[[1]].nom[1])
-print(datagouv.iloc[[1]].nom[1])
+print(dataFrame.head())
+# print(datagouv.head())
+finalArray = []
+# print(dataFrame.iloc[[2]].nom[2])
+# print(datagouv.iloc[[1]].nom[1])
+dateDetails = DataUtilies()
+dataFrameDay = dateDetails.dataFrame(dateDetails.getDateUtilitesJson())
+
 for i in range(len(dataFrame)):
+    dataFrameName = dataFrame.iloc[[i]].nom[i]
     for y in range(len(datagouv)):
-        if dataFrame.iloc[[i]].nom[1] in datagouv.iloc[[y]].nom[1]:
+        dataGouvName = datagouv.iloc[[y]].nom[y]
+        if dataFrameName == dataGouvName:
             FinalData_set = {
-                "ville": dataFrame[i]['ville'],
-                "nom": datagouv[y]['nom'],
-                "date": dataFrame[i]['date'],
-                "place_libres": dataFrame[i]['place_libres'],
-                "places_totales": dataFrame[i]['places_totales'],
-                "prix": datagouv[y]['prix'],
-                "longitude": datagouv[y]['longitude'],
-                "latitude": datagouv[y]['latitude'],
+                "ville": dataFrame.iloc[[i]].ville[i],
+                "nom": datagouv.iloc[[y]].nom[y],
+                "date": dataFrame.iloc[[i]].date[i],
+                "place_libres": dataFrame.iloc[[i]].place_libres[i],
+                "places_totales": dataFrame.iloc[[i]].places_totales[i],
+                "prix": datagouv.iloc[[y]].prix[y],
+                "longitude": datagouv.iloc[[y]].longitude[y],
+                "latitude": datagouv.iloc[[y]].latitude[y],
+                "date_status": dateDetails.getDetailOfTheDay(dataFrame.iloc[[i]].date[i], dataFrameDay)['status'],
+                "date_day_name": dateDetails.getDetailOfTheDay(dataFrame.iloc[[i]].date[i], dataFrameDay)['jour'],
+                "isFérié": dateDetails.getDetailOfTheDay(dataFrame.iloc[[i]].date[i], dataFrameDay)['férier']
             }
-        finalArray.append(FinalData_set)
+            # print(FinalData_set)
+            finalArray.append(FinalData_set)
 print(finalArray)
-#finalDataFrame = pd.DataFrame(finalArray)
+finalDataFrame = pd.DataFrame(finalArray)
