@@ -9,7 +9,7 @@ load_dotenv()
 class Connect:
 
     def getConnection(self):
-        connection = mysql.connector.connect(host=os.getenv("HOST_LOCAL"), database=os.getenv("DATABASE_LOCAL"),
-                                             user=os.getenv("LOGIN_LOCAL"), password=os.getenv("PASSWORD_LOCAL"),
-                                             port=os.getenv("PORT_LOCAL"))
+        connection = mysql.connector.connect(host=os.getenv("HOST"), database=os.getenv("DATABASE"),
+                                             user=os.getenv("LOGIN"), password=os.getenv("PASSWORD"),
+                                             port=os.getenv("PORT"))
         return connection

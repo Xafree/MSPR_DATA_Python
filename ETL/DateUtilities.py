@@ -63,6 +63,6 @@ class DataUtilies:
         details = {
             'jour': self.dayName(self.getAllDays(dataFrame), date),
             'status': self.status(self.getAllDays(dataFrame), date),
-            'férier': self.ferie(self.getAllDays(dataFrame), date)
+            'isFerie': self.ferie(self.getAllDays(dataFrame), date)
         }
         return details

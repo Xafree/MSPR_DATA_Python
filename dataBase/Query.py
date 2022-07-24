@@ -1,22 +1,22 @@
 class Query:
 
     def get(self):
-        return "Select * from Parkings"
+        return "Select * from parkings"
 
     def insertIntoParkings(self):
-        return "INSERT INTO parkings (updated_place, update_parking, nom, num_siret, ville, prix, longitude, latitude, nb_place_totale, nb_place_disponible, estgratuit) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        return "INSERT INTO parkings (ville, nom, update_date, nb_places_libres, nb_places_totales, prix, longitude, latitude, date_status, date_day_name, isFerie) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
 
     def insertIntoParkingsHist(self):
-        return "INSERT INTO parkings_hist (timestamp_id,updated_place, update_parking, nom, num_siret, ville, prix, longitude, latitude, nb_place_totale, nb_place_disponible, estgratuit,id_parking) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        return "INSERT INTO parkings_hist (timestamp_id,ville, nom, update_date, nb_places_libres, nb_places_totales, prix, longitude, latitude, date_status, date_day_name, isFerie, id_parking) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
 
-    def getOneParkings(self):
-        return "SELECT * FROM parkings WHERE num_siret = %s"
+    def getOneParking(self):
+        return "SELECT * FROM parkings WHERE nom = %s"
 
     def getParkingsHist(self):
-        return "Select * from Parkings_hist"
+        return "Select * from parkings_hist"
 
     def checkIfParkingExist(self):
         return "SELECT id_parking FROM parkings WHERE nom = %s"
 
     def updateParking(self):
-        return "UPDATE parkings SET updated_place=%s, update_parking=%s, nom=%s, num_siret=%s, ville=%s, prix=%s, longitude=%s, latitude=%s, nb_place_totale=%s, nb_place_disponible=%s, estgratuit=%s WHERE id_parking =%s"
+        return "UPDATE parkings SET ville=%s, nom=%s, update_date=%s, nb_places_libres=%s, nb_places_totales=%s, prix=%s, longitude=%s, latitude=%s, date_status=%s, date_day_name=%s, isFerie=%s WHERE id_parking =%s"

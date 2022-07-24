@@ -26,14 +26,14 @@ for i in range(len(dataFrame)):
                 "ville": dataFrame.iloc[[i]].ville[i],
                 "nom": datagouv.iloc[[y]].nom[y],
                 "date": dataFrame.iloc[[i]].date[i],
-                "place_libres": dataFrame.iloc[[i]].place_libres[i],
-                "places_totales": dataFrame.iloc[[i]].places_totales[i],
+                "nb_places_libres": dataFrame.iloc[[i]].place_libres[i],
+                "nb_places_totales": dataFrame.iloc[[i]].places_totales[i],
                 "prix": datagouv.iloc[[y]].prix[y],
                 "longitude": datagouv.iloc[[y]].longitude[y],
                 "latitude": datagouv.iloc[[y]].latitude[y],
                 "date_status": dateDetails.getDetailOfTheDay(dataFrame.iloc[[i]].date[i], dataFrameDay)['status'],
                 "date_day_name": dateDetails.getDetailOfTheDay(dataFrame.iloc[[i]].date[i], dataFrameDay)['jour'],
-                "isFérié": dateDetails.getDetailOfTheDay(dataFrame.iloc[[i]].date[i], dataFrameDay)['férier']
+                "isFerie": 1 if dateDetails.getDetailOfTheDay(dataFrame.iloc[[i]].date[i], dataFrameDay)['isFerie'] else 0
             }
             isInsert = 1
             finalArray.append(FinalData_set)
@@ -43,14 +43,14 @@ for i in range(len(dataFrame)):
             "ville": dataFrame.iloc[[i]].ville[i],
             "nom": datagouv.iloc[[y]].nom[y],
             "date": dataFrame.iloc[[i]].date[i],
-            "place_libres": dataFrame.iloc[[i]].place_libres[i],
-            "places_totales": dataFrame.iloc[[i]].places_totales[i],
+            "nb_places_libres": dataFrame.iloc[[i]].place_libres[i],
+            "nb_places_totales": dataFrame.iloc[[i]].places_totales[i],
             "prix": None,
             "longitude":  None,
             "latitude": None,
             "date_status": dateDetails.getDetailOfTheDay(dataFrame.iloc[[i]].date[i], dataFrameDay)['status'],
             "date_day_name": dateDetails.getDetailOfTheDay(dataFrame.iloc[[i]].date[i], dataFrameDay)['jour'],
-            "isFérié": dateDetails.getDetailOfTheDay(dataFrame.iloc[[i]].date[i], dataFrameDay)['férier']
+            "isFerie": 1 if dateDetails.getDetailOfTheDay(dataFrame.iloc[[i]].date[i], dataFrameDay)['isFerie'] else 0
         }
         finalArray.append(FinalData_set)
     isInsert = 0

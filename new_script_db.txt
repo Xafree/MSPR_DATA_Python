@@ -1,0 +1,34 @@
+CREATE TABLE parkings(
+   id_parking int NOT NULL AUTO_INCREMENT,
+   ville VARCHAR(255),
+   nom VARCHAR(255),
+   update_date DATETIME,
+   nb_places_libres VARCHAR(50),
+   nb_places_totales VARCHAR(50),
+   prix DECIMAL(15,2),
+   longitude DECIMAL(15,10),
+   latitude DECIMAL(15,10),
+   date_status VARCHAR(50),
+   date_day_name VARCHAR(50),
+   isFerie BOOLEAN,
+   PRIMARY KEY(id_parking)
+);
+
+CREATE TABLE parkings_hist(
+   id_parking_hist int NOT NULL AUTO_INCREMENT,
+   timestamp_id DATETIME,
+   updated_date DATETIME,
+   ville VARCHAR(255),
+   nom VARCHAR(255),
+   nb_places_totales VARCHAR(50),
+   nb_places_libres VARCHAR(50),
+   prix DECIMAL(15,2),
+   longitude DECIMAL(15,10),
+   latitude DECIMAL(15,10),
+   date_status VARCHAR(50),
+   date_day_name VARCHAR(50),
+   isFerie BOOLEAN,
+   id_parking INT NOT NULL,
+   PRIMARY KEY(id_parking_hist, timestamp_id),
+   FOREIGN KEY(id_parking) REFERENCES parkings(id_parking)
+);

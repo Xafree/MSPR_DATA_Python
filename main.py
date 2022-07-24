@@ -9,17 +9,17 @@ dataStrasbourg = strasbourg.getDataAboutCarsParkStrasbourg()
 #print(dataStrasbourg)
 
 dataTest = {
-    "updated_place": '2022-07-07 19:07:30',
-    "update_parking": '2022-07-18 19:07:30',
-    "nom": 'Parking test',
-    "num_siret": 8658975654,
-    "ville": "Montpllier",
-    "prix": 0.0,
-    "longitude": 1540.15,
-    "latitude": 4500.152,
-    "nb_place_totale": 12000,
-    "nb_place_disponible": 900,
-    "estgratuit": 0,
+    'ville': 'Montpellier',
+    'nom': 'Antigone',
+    'date': '2022-07-24 19:11:52',
+    'nb_places_libres': '0172',
+    'nb_places_totales': '0239',
+    'prix': None,
+    'longitude': 3.88881893,
+    'latitude': 43.60871606,
+    'date_status': 'week-end',
+    'date_day_name': 'dimanche',
+    'isFerie': 0
 }
 
 print("--Data base --")
