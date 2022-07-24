@@ -66,13 +66,3 @@ class DataUtilies:
             'férier': self.ferie(self.getAllDays(dataFrame), date)
         }
         return details
-
-
-# print(getDetailOfTheDay('2022-07-23 20:50:30',dataFrame))
-
-dateUtilites = DataUtilies()
-
-dataFrame = dateUtilites.dataFrame(dateUtilites.getDateUtilitesJson())
-getDetails = dateUtilites.getDetailOfTheDay('2022-07-23 20:50:30', dataFrame)
-
-print(getDetails)
