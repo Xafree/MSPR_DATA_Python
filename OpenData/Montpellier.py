@@ -33,19 +33,19 @@ def  switchNameOpenData(name):
         'FOCH': "Foch Préfecture",
         'GAMB': "Gambetta",
         'GARE': "Saint Roch",
-        'TRIA': "Triangle",
-        'PITO': "PITOT",
-        'CIRC': "Circé Odysseum",
+        'Triangle': "Triangle",
+        'Pitot': "PITOT",
+        'CIRCE': "Circé Odysseum",
         'SABI': "Sabines",
-        'GARC': "Garcia Lorca",
+        'GARD': "Garcia Lorca",
         'SABL': "Notre Dame de Sablassou",
         'MOSS': "Mosson",
         'SJLC': "Saint Jean Le Sec", #Not match
         'MEDC': "Euromédecine ",
         'OCCI': "Occitanie",
         'VICA': "Vicarello", #Not match
-        'GA109': "Gaumont EST", #Not match
-        'GA250': "Gaumont OUEST", #Not match
+        'GAUMONT-EST': "Gaumont EST", #Not match
+        'GAUMONT-OUEST': "Gaumont OUEST", #Not match
         'CDGA': "Charles de Gaulle",
         'ARCE': "Arceaux",
         'POLY': "Polygone",
@@ -71,8 +71,8 @@ def extractFormatJson(JsonOpenDataMontpellier):
                 "ville": "Montpellier",
                 "nom": name,
                 "date": datetime.strptime(root.findtext("DateTime")[0:19], '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d %H:%M:%S'),
-                "place_libres": root.findtext("Free"),
-                "places_totales": root.findtext("Total")
+                "place_libres": int(root.findtext("Free")),
+                "places_totales": int(root.findtext("Total"))
             }
         #data_to_json = json.dumps(data_set)
         data_montpellier.append(data_set)

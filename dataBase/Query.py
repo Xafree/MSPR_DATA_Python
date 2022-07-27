@@ -20,3 +20,7 @@ class Query:
 
     def updateParking(self):
         return "UPDATE parkings SET ville=%s, nom=%s, update_date=%s, nb_places_libres=%s, nb_places_totales=%s, prix=%s, longitude=%s, latitude=%s, date_status=%s, date_day_name=%s, isFerie=%s WHERE id_parking =%s"
+
+    # TEST NEW UPSERT
+    # def upsertParking(self):
+    #     return "INSERT INTO parkings (ville, nom, update_date, nb_places_libres, nb_places_totales, prix, longitude, latitude, date_status, date_day_name, isFerie) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE ville=%s, nom=%s, update_date=%s, nb_places_libres=%s, nb_places_totales=%s, prix=%s, longitude=%s, latitude=%s, date_status=%s, date_day_name=%s, isFerie=%s"

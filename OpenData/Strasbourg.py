@@ -25,8 +25,8 @@ def DataListeOfCarsParkAboutStrasbourg(dataJson):
             "nom": dataJson['records'][i]['fields']['nom_parking'],
             "date": datetime.strptime(dataJson['records'][i]['record_timestamp'], '%Y-%m-%dT%H:%M:%S.%f%z').strftime('%Y-%m-%d %H:%M:%S'),
             #"date": dataJson['records'][i]['record_timestamp'],
-            "place_libres": dataJson['records'][i]['fields']['libre'],
-            "places_totales": dataJson['records'][i]['fields']['total']
+            "place_libres": int(dataJson['records'][i]['fields']['libre']),
+            "places_totales": int(dataJson['records'][i]['fields']['total'])
         }
         data_strasbourg.append(data_set)
     return data_strasbourg

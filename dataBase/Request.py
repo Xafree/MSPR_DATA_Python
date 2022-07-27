@@ -46,6 +46,30 @@ class Request:
 
         connection.close()
 
+    # TEST NEW UPSERT
+    # def customUpsert(selfself, data):
+    #     connection = Connect().getConnection()
+    #     query = Query()
+    #     cursor = connection.cursor()
+    #
+    #     try:
+    #         sqlUpsertParkings = query.upsertParking()
+    #         cursor.execute(sqlUpsertParkings, (data['ville'], data['nom'],
+    #                                      data['date'], data['nb_places_libres'], data['nb_places_totales'],
+    #                                      data['prix'],
+    #                                      data['longitude'], data['latitude'], data['date_status'],
+    #                                      data['date_day_name'], data['isFerie'],
+    #                                      data['ville'], data['nom'],
+    #                                      data['date'], data['nb_places_libres'], data['nb_places_totales'],
+    #                                      data['prix'],
+    #                                      data['longitude'], data['latitude'], data['date_status'],
+    #                                      data['date_day_name'], data['isFerie']))
+    #         connection.commit()
+    #     except ValueError:
+    #         print(ValueError)
+    #     finally:
+    #         connection.close()
+
     def upsertParkingAndWriteInHistoryTable(self, data):
         # SQL connect dataBase
         connection = Connect().getConnection()
